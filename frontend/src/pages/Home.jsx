@@ -80,7 +80,7 @@ const Home = () => {
 
       {/* Bottom Navigation */}
       {/* Translucent mirror-style bottom bar */}
-      <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
+      <div className="fixed bottom-0 left-0 w-full h-12 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="flex flex-col items-center gap-1 text-primary hover:text-white transition-colors"

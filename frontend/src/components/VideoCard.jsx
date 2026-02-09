@@ -100,7 +100,7 @@ const VideoCard = ({ item }) => {
     return (
         <div ref={containerRef} className="h-screen  w-full snap-start relative bg-gray-900 flex items-center justify-center overflow-hidden">
             {/* Video Background */}
-            <div className="absolute  inset-0 z-0" onClick={handleVideoClick}>
+            <div className="absolute inset-0 z-0" onClick={handleVideoClick}>
                 <video 
                     ref={videoRef}
                     src={item.video } 
@@ -143,7 +143,7 @@ const VideoCard = ({ item }) => {
             <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90 pointer-events-none z-10"></div>
 
             {/* Right Side Actions (Like, Share, etc. - typical for reels) */}
-            <div className="absolute right-4 bottom-30 flex flex-col gap-3 z-30 items-center">
+            <div className="absolute right-4 bottom-40 flex flex-col gap-3 z-30 items-center">
                 <LikeButton isLiked={isLiked} likeCount={likeCount} onLike={handleLike} />
                 <Comment item={item} containerRef={containerRef} />
                 <Save item={item} />
@@ -166,7 +166,7 @@ const VideoCard = ({ item }) => {
             </div>
 
             {/* Bottom Content Area */}
-            <div className="absolute bottom-6 left-0 w-full p-6 pb-8 z-20 flex flex-col gap-4">
+            <div className="absolute bottom-16 left-0 w-full p-6 pb-8 z-20 flex flex-col gap-4">
                 
                 {/* Info Section */}
                 <div className="flex flex-col gap-2 max-w-[85%]">

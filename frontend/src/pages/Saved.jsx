@@ -67,11 +67,11 @@ const Saved = () => {
                     <span className="text-[10px] font-medium">Saved</span>
                 </button>
                 <Link 
-                          to="/order-list"
-                          className="flex flex-col items-center gap-1 text-gray-300 hover:text-white transition-colors">
-                          <ShoppingBag size={24} />
-                          <span className="text-[10px] font-medium">Orders</span>
-                        </Link>
+                    to="/order-list"
+                    className="flex flex-col items-center gap-1 text-gray-300 hover:text-white transition-colors">
+                    <ShoppingBag size={24} />
+                    <span className="text-[10px] font-medium">Orders</span>
+                </Link>
             </div>
         </div>
      )
@@ -99,6 +99,12 @@ const Saved = () => {
             <Bookmark size={24} />
             <span className="text-[10px] font-medium">Saved</span>
         </button>
+        <Link 
+            to="/order-list"
+            className="flex flex-col items-center gap-1 text-gray-300 hover:text-white transition-colors">
+            <ShoppingBag size={24} />
+            <span className="text-[10px] font-medium">Orders</span>
+        </Link>
       </div>
     </div>
   );

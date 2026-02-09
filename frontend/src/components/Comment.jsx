@@ -91,6 +91,15 @@ const Comment = ({ item, containerRef }) => {
                                 <SkeletonComment />
                                 <SkeletonComment />
                                 <SkeletonComment />
+                                <SkeletonComment />
+                                <SkeletonComment />
+                                <SkeletonComment />
+                                <SkeletonComment />
+                                <SkeletonComment />
+                                <SkeletonComment />
+                                <SkeletonComment />
+                                <SkeletonComment />
+                                <SkeletonComment />
                             </>
                         ) : comments.length === 0 ? (
                             <div className="text-center text-gray-400 mt-10">No comments yet. Be the first!</div>

@@ -66,7 +66,7 @@ async function likeFoodItem(req, res) {
     }
 
     const like = await likeModel.create({
-        userId: userId,
+        user: userId,
         food: foodId,
     });
     await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: 1 } });
@@ -97,7 +97,7 @@ async function postComment(req, res) {
 
     const comment = await commentModel.create({
         content,
-        userId: userId,
+        user: userId,
         foodItem: foodId,
     });
     
@@ -224,7 +224,7 @@ async function createOrder(req, res) {
 async function getOrderList(req, res) {
     try {
         const userId = req.user._id;
-        const orders = await orderModel.find({ userId }).populate('foodPartnerId', 'fullname profilePicture');
+        const orders = await orderModel.find({ userId }).populate('foodPartnerId', 'name profilePicture');
         res.status(200).json({ message: 'Order list fetched successfully', orders });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching order list', error: error.message });
@@ -245,5 +245,5 @@ module.exports = {
     deleteFoodItem,
     updateFoodItem,
     createOrder,
-    getOrderList
+    getOrderList,
 }

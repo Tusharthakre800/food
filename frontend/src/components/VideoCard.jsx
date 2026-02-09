@@ -98,7 +98,7 @@ const VideoCard = ({ item }) => {
     };
 
     return (
-        <div ref={containerRef} className="h-screen  w-full snap-start relative bg-gray-900 flex items-center justify-center overflow-hidden">
+        <div ref={containerRef} className="h-screen w-full snap-start relative bg-gray-900 flex items-center justify-center overflow-hidden">
             {/* Video Background */}
             <div className="absolute inset-0 z-0" onClick={handleVideoClick}>
                 <video 

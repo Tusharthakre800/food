@@ -1,16 +1,83 @@
-# React + Vite
+# Food App Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for the Food App, a TikTok-style food discovery and delivery platform. It offers an immersive video-based feed for browsing food items and a seamless ordering experience.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Immersive Feed**:
+  - TikTok-style vertical scrolling video feed (`VideoCard`).
+  - Auto-play videos with play/pause control.
+  - Double-tap to like interaction.
+- **User Experience**:
+  - **Authentication**: User and Partner login/registration flows.
+  - **Dark Mode**: Default dark theme with glassmorphism UI elements.
+  - **Animations**: Smooth transitions using Tailwind CSS and custom animations.
+  - **Toast Notifications**: Interactive alerts using `react-hot-toast`.
+- **Ordering System**:
+  - **Order Flow**: Buy button -> Order Summary -> Address Edit -> Order Processing Animation -> Success.
+  - **Address Management**: Edit and save delivery address during checkout.
+  - **Pricing**: Dynamic calculation with quantity and platform fees.
+- **Social Features**:
+  - Like, Comment, and Save food items.
+  - Visit Partner Profiles to see their menu.
+- **Partner Dashboard**:
+  - Partners can upload new dishes with videos.
+  - Manage existing listings (Edit/Delete).
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: React (Vite)
+- **Styling**: Tailwind CSS
+- **Routing**: React Router DOM
+- **HTTP Client**: Axios
+- **Icons**: Lucide React
+- **Notifications**: React Hot Toast
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1.  Navigate to the frontend directory:
+    ```bash
+    cd frontend
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+## Configuration
+
+Create a `.env` file in the root of the `frontend` directory if needed (e.g., for API base URL):
+
+```env
+VITE_BASE_URL=http://localhost:3000
+```
+
+## Running the Application
+
+- **Development Server**:
+    ```bash
+    npm run dev
+    ```
+- **Build for Production**:
+    ```bash
+    npm run build
+    ```
+- **Preview Build**:
+    ```bash
+    npm run preview
+    ```
+
+## Key Components
+
+- `VideoCard.jsx`: The core feed component displaying video, info, and interactions.
+- `OrderFood.jsx`: The checkout page with address editing and order processing.
+- `PartnerProfile.jsx`: Profile page for food partners displaying their menu.
+- `AppRouter.jsx`: Centralized routing configuration.
+
+## Directory Structure
+
+- `src/components`: Reusable UI components (VideoCard, Comments, etc.).
+- `src/pages`: Full-page components (Home, OrderFood, Login, etc.).
+- `src/context`: React context providers (e.g., ThemeContext).
+- `src/routers`: Route definitions.
+- `src/assets`: Static assets.

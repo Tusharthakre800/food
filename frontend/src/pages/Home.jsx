@@ -32,6 +32,8 @@ const Home = () => {
         setFoodItems(items);
       } catch (err) {
         console.error("Error fetching food items:", err);
+        toast.error("Failed to load food items. Please try again.");
+        navigate('/user/login');
       } finally {
         setLoading(false);
       }

@@ -89,6 +89,7 @@ const CreateFoodPartner = () => {
       loading: 'Uploading new dish...',
       success: 'Dish added successfully!',
       error: (err) => err.response?.data?.message || 'Failed to create dish'
+      
     });
 
     try {

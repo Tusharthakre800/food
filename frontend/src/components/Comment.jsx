@@ -89,7 +89,7 @@ const Comment = ({ item, containerRef }) => {
                             comments.map(comment => (
                                 <div key={comment._id} className="flex gap-3">
                                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold uppercase text-white shrink-0">
-                                        {comment.user?.fullname?.[0] || 'U'}
+                                        {comment.userId?.fullname?.[0] || 'U'}
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex items-baseline gap-2">
@@ -103,7 +103,7 @@ const Comment = ({ item, containerRef }) => {
                         )}
                     </div>
 
-                    <form onSubmit={handlePostComment} className="p-4 border-t border-white/10 flex gap-2">
+                    <form onSubmit={handlePostComment} className="p-4 mb-14 border-t border-white/10 flex gap-2">
                         <input 
                             type="text" 
                             value={commentText}

@@ -66,7 +66,7 @@ async function likeFoodItem(req, res) {
     }
 
     const like = await likeModel.create({
-        user: userId,
+        userId: userId,
         food: foodId,
     });
     await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: 1 } });
@@ -97,7 +97,7 @@ async function postComment(req, res) {
 
     const comment = await commentModel.create({
         content,
-        user: userId,
+        userId: userId,
         foodItem: foodId,
     });
     

@@ -103,7 +103,7 @@ const Comment = ({ item, containerRef }) => {
                         )}
                     </div>
 
-                    <form onSubmit={handlePostComment} className="p-4 mb-20 border-t border-white/10 flex gap-2">
+                    <form onSubmit={handlePostComment} className="p-4 mb-26 border-t border-white/10 flex gap-2">
                         <input 
                             type="text" 
                             value={commentText}

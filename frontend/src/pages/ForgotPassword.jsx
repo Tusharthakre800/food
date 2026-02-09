@@ -5,6 +5,7 @@ import ThemeToggle from '../components/ThemeToggle';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');

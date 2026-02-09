@@ -1,0 +1,41 @@
+import { Routes, Route, Navigate } from 'react-router-dom';
+import UserLogin from '../pages/UserLogin';
+import UserRegister from '../pages/UserRegister';
+import PartnerLogin from '../pages/PartnerLogin';
+import PartnerRegister from '../pages/PartnerRegister';
+import Home from '../pages/Home';
+import Saved from '../pages/Saved';
+import Profile from '../pages/Profile';
+import PartnerProfile from '../pages/PartnerProfile';
+import ForgotPassword from '../pages/ForgotPassword';
+import ResetPassword from '../pages/ResetPassword';
+import PartnerForgotPassword from '../pages/PartnerForgotPassword';
+import PartnerResetPassword from '../pages/PartnerResetPassword';
+import CreateFoodPartner from '../create-food/CreateFoodPartner';
+import OrderFood from '../pages/OrderFood';
+
+function AppRouter() {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Navigate to="/user/login" replace />} />
+        <Route path="/user/login" element={<UserLogin />} />
+        <Route path="/user/register" element={<UserRegister />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/partner/login" element={<PartnerLogin />} />
+        <Route path="/partner/register" element={<PartnerRegister />} />
+        <Route path="/partner/forgot-password" element={<PartnerForgotPassword />} />
+        <Route path="/partner/reset-password/:token" element={<PartnerResetPassword />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/saved" element={<Saved />} />
+        <Route path="/partner/:id" element={<Profile />} />
+        <Route path="/create-food" element={<CreateFoodPartner />} />
+        <Route path="/order-food" element={<OrderFood />} />
+        <Route path="/partner/profile" element={<PartnerProfile />} />
+      </Routes>
+    </>
+  );
+}
+
+export default AppRouter;

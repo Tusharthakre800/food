@@ -13,6 +13,9 @@ import PartnerForgotPassword from '../pages/PartnerForgotPassword';
 import PartnerResetPassword from '../pages/PartnerResetPassword';
 import CreateFoodPartner from '../create-food/CreateFoodPartner';
 import OrderFood from '../pages/OrderFood';
+import OrderList from '../pages/OrderList';
+
+
 
 function AppRouter() {
   return (
@@ -33,6 +36,7 @@ function AppRouter() {
         <Route path="/create-food" element={<CreateFoodPartner />} />
         <Route path="/order-food" element={<OrderFood />} />
         <Route path="/partner/profile" element={<PartnerProfile />} />
+        <Route path="/order-list" element={<OrderList />} />
       </Routes>
     </>
   );

@@ -203,8 +203,8 @@ const VideoCard = ({ item }) => {
                 </div>
 
                 {/* Visit Store Button */}
-                <Link to={"/partner/" + item.foodPartnerId} className="w-full bg-primary hover:bg-primary-hover text-white py-3.5 rounded-xl font-bold text-base shadow-lg shadow-primary/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
-                    <Store size={20} />
+                <Link to={"/partner/" + item.foodPartnerId} className="w-full bg-primary hover:bg-primary-hover text-white py-3.5 rounded-xl font-bold text-base shadow-lg shadow-primary/20 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+                    <Store size={18} />
                     <span>Visit Store</span>
                 </Link>
             </div>

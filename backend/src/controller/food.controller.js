@@ -221,6 +221,16 @@ async function createOrder(req, res) {
     }
 }
 
+async function getOrderList(req, res) {
+    try {
+        const userId = req.user._id;
+        const orders = await orderModel.find({ userId }).populate('foodPartnerId', 'fullname profilePicture');
+        res.status(200).json({ message: 'Order list fetched successfully', orders });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching order list', error: error.message });
+    }
+}
+
 
 
 module.exports = {
@@ -234,5 +244,6 @@ module.exports = {
     getPartnerProfile,
     deleteFoodItem,
     updateFoodItem,
-    createOrder
+    createOrder,
+    getOrderList
 }

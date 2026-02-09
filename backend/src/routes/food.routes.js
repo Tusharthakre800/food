@@ -38,4 +38,6 @@ router.put('/:id', authMiddleware.authfoodpartnermiddleware, upload.single('vide
 
 router.post('/order', authMiddleware.authusermiddleware, foodController.createOrder);
 
+router.get('/order-list', authMiddleware.authusermiddleware, foodController.getOrderList);
+
 module.exports = router;

@@ -234,7 +234,7 @@ const OrderFood = () => {
                     <p className="text-xs text-center text-gray-500 mt-2">Only COD (Cash on Delivery) available</p>
                 </div>
             </div>
-            
+
 
             {/* Bottom Action */}
             <div className="fixed bottom-0 left-0 w-full p-4 bg-black/90 backdrop-blur-md border-t border-white/10">

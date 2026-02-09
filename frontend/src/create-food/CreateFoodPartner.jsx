@@ -120,16 +120,16 @@ const CreateFoodPartner = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 pb-20 font-sans">
+    <div className="min-h-screen bg-black text-white p-6  font-sans">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
+      <div className="flex items-center gap-2 mb-2">
         {/* <Link to="/home" className="p-2 bg-gray-900 rounded-full hover:bg-gray-800 transition-colors">
           <ArrowLeft size={24} className="text-white" />
         </Link> */}
         <h1 className="text-2xl font-bold">Add New Dish</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-2 max-w-md mx-auto">
         
         {/* Video Upload Section */}
         <div className="relative">

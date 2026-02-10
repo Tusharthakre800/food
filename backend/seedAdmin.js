@@ -9,8 +9,8 @@ const seedAdmin = async () => {
         await connectDB();
         console.log("Connected to DB");
 
-        const adminEmail = "ruchikthakre@gmail.com";
-        const adminPassword = "ruchick@1";
+        const adminEmail = process.env.Admin_Email;
+        const adminPassword = process.env.Admin_Password;
 
         // Check if user exists
         const existingUser = await UserModel.findOne({ email: adminEmail });

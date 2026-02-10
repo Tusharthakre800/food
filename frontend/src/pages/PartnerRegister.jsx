@@ -1,14 +1,17 @@
-import { Link  , useNavigate } from 'react-router-dom';
-import { Mail, Lock, ArrowRight, Store, ChefHat, MapPin, Phone } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Mail, Lock, ArrowRight, Store, ChefHat, MapPin, Phone, Loader2 } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import axios from 'axios';
+import { useState } from 'react';
 
 const PartnerRegister = () => {
 
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   
   const handleRegister = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(e.target);
     const partnerData = Object.fromEntries(formData);
     try {
@@ -23,6 +26,8 @@ const PartnerRegister = () => {
     } catch (error) {
       // console.error('Registration failed:', error.response?.data || error.message);
       // alert(error.response?.data?.message || "Registration failed");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -181,10 +186,20 @@ const PartnerRegister = () => {
 
               <button
                 type="submit"
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-gray-900 hover:bg-gray-800 dark:bg-primary dark:hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-all duration-200 shadow-lg"
+                disabled={isLoading}
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-gray-900 hover:bg-gray-800 dark:bg-primary dark:hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-all duration-200 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Register Partner
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Registering...</span>
+                  </div>
+                ) : (
+                  <>
+                    Register Partner
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
               </button>
               
               <div className="relative my-4">

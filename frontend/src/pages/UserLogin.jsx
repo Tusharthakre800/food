@@ -1,15 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, ArrowRight, ChefHat, User } from 'lucide-react';
+import { Mail, Lock, ArrowRight, ChefHat, User, Loader2 } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 const UserLogin = () => {
 
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(e.target);
     const loginData = Object.fromEntries(formData);
     try {
@@ -32,6 +35,8 @@ const UserLogin = () => {
       } else {
         toast.error(errorMessage || "Login failed");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -132,10 +137,20 @@ const UserLogin = () => {
 
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 shadow-lg shadow-primary/30 hover:shadow-primary/50"
+              disabled={isLoading}
+              className="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 shadow-lg shadow-primary/30 hover:shadow-primary/50 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Sign in
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span>Signing in...</span>
+                </div>
+              ) : (
+                <>
+                  Sign in
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </button>
             
             <div className="relative my-6">

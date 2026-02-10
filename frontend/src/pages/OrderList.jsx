@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ShoppingBag, MapPin, Clock, ChefHat } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { ArrowLeft, ShoppingBag, MapPin, Clock, ChefHat, Home as HomeIcon, Bookmark } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const OrderList = () => {
@@ -159,6 +159,33 @@ const OrderList = () => {
                         ))}
                     </div>
                 )}
+            </div>
+
+            {/* Bottom Navigation */}
+            <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
+                <Link
+                    to="/home"
+                    className="flex flex-col items-center gap-1 text-gray-300 hover:text-white transition-colors"
+                >
+                    <HomeIcon size={24} />
+                    <span className="text-[10px] font-medium">Home</span>
+                </Link>
+
+                <Link
+                    to="/saved"
+                    className="flex flex-col items-center gap-1 text-gray-300 hover:text-white transition-colors"
+                >
+                    <Bookmark size={24} />
+                    <span className="text-[10px] font-medium">Saved</span>
+                </Link>
+
+                <button
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    className="flex flex-col items-center gap-1 text-primary hover:text-white transition-colors"
+                >
+                    <ShoppingBag size={24} />
+                    <span className="text-[10px] font-medium">Orders</span>
+                </button>
             </div>
         </div>
     );

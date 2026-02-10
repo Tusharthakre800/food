@@ -4,18 +4,15 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth.routes');
 const foodRoutes = require('./routes/food.routes');
 const foodpartnerRoutes = require('./routes/food-parter.routes');
+const adminRoutes = require('./routes/admin.routes');
 const cors = require('cors');
-
-
-
-
 
 const app = express();
 app.use(cookieParser());
 
 const allowedOrigins = [
   'http://localhost:3000', 
-  'http://localhost:5173',
+  // 'http://localhost:5173',
   process.env.FRONTEND_URL // Allow dynamic frontend URL from env
 ].filter(Boolean); // Remove undefined/null
 
@@ -32,8 +29,6 @@ app.use(cors({
   credentials: true,
 }));
 
-
-
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -43,9 +38,6 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/food', foodRoutes);
 app.use('/api/foodpartner', foodpartnerRoutes);
-
-
-
-
+app.use('/api/admin', adminRoutes);
 
 module.exports = app;

@@ -14,6 +14,13 @@ import PartnerResetPassword from '../pages/PartnerResetPassword';
 import CreateFoodPartner from '../create-food/CreateFoodPartner';
 import OrderFood from '../pages/OrderFood';
 import OrderList from '../pages/OrderList';
+import AdminLogin from '../adminpanels/AdminLogin';
+import Adminhome from '../adminpanels/Adminhome';
+import AdminRoute from '../adminpanels/AdminRoute';
+import AdminTotalUser from '../adminpanels/AdminTotalUser';
+import AdminTotalFoodpartner from '../adminpanels/AdminTotalFoodpartner';
+import AdminAllOrder from '../adminpanels/AdminAllOrder';
+import AdminAllComment from '../adminpanels/AdminAllComment';
 
 
 
@@ -22,6 +29,35 @@ function AppRouter() {
     <>
       <Routes>
         <Route path="/" element={<Navigate to="/user/login" replace />} />
+        
+        Admin Routes
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={
+            <AdminRoute>
+              <Adminhome />
+            </AdminRoute>
+        } />
+        <Route path="/admin/users" element={
+            <AdminRoute>
+              <AdminTotalUser />
+            </AdminRoute>
+        } />
+        <Route path="/admin/partners" element={
+            <AdminRoute>
+              <AdminTotalFoodpartner />
+            </AdminRoute>
+        } />
+        <Route path="/admin/orders" element={
+            <AdminRoute>
+              <AdminAllOrder />
+            </AdminRoute>
+        } />
+        <Route path="/admin/comments" element={
+            <AdminRoute>
+              <AdminAllComment />
+            </AdminRoute>
+        } />
+
         <Route path="/user/login" element={<UserLogin />} />
         <Route path="/user/register" element={<UserRegister />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

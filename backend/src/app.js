@@ -9,8 +9,10 @@ const cors = require('cors');
 
 const app = express();
 app.use(cookieParser());
+app.disable('x-powered-by');
 
-const allowedOrigins = [
+const allowedOrigins = [,
+  
   'http://localhost:3000', 
   // 'http://localhost:5173',
   process.env.FRONTEND_URL // Allow dynamic frontend URL from env
@@ -27,6 +29,8 @@ app.use(cors({
     }
   },
   credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  accessControlAllowCredentials: true,
 }));
 
 app.use(express.json());

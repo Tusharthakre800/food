@@ -50,6 +50,8 @@ const OrderFood = () => {
     const [address, setAddress] = useState("123 Food Street, Tasty City");
     const [isEditingAddress, setIsEditingAddress] = useState(false);
     const [processingStep, setProcessingStep] = useState(0);
+    const [discountCode, setDiscountCode] = useState('');
+    const [appliedDiscount, setAppliedDiscount] = useState(null);
     
     // Redirect if no item data
     useEffect(() => {
@@ -64,12 +66,37 @@ const OrderFood = () => {
     const price = parseFloat(item.price) || 0;
     const totalPrice = (price * quantity).toFixed(2);
     const platformFee = (parseFloat(totalPrice) * 0.30).toFixed(2);
-    const finalTotal = (parseFloat(totalPrice) + parseFloat(platformFee)).toFixed(2);
+    let finalTotal = (parseFloat(totalPrice) + parseFloat(platformFee));
+    
+    if (appliedDiscount) {
+        finalTotal -= appliedDiscount.discountAmount;
+    }
+    
+    finalTotal = Math.max(0, finalTotal).toFixed(2);
 
     const handleQuantityChange = (delta) => {
         const newQuantity = quantity + delta;
         if (newQuantity >= 1) {
             setQuantity(newQuantity);
+        }
+    };
+
+    const handleApplyDiscount = async () => {
+        if (!discountCode.trim()) return;
+        
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(
+                `${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/discount`,
+                { discountCode },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            
+            setAppliedDiscount(response.data.discount);
+            toast.success(`Discount of $${response.data.discount.discountAmount} applied!`);
+        } catch (error) {
+            setAppliedDiscount(null);
+            toast.error(error.response?.data?.message || "Invalid discount code");
         }
     };
 
@@ -217,6 +244,45 @@ const OrderFood = () => {
 
                 {/* Payment Summary */}
                 <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800 space-y-3">
+                    <h3 className="font-bold text-sm text-gray-400 uppercase tracking-wider">Discount Code</h3>
+                    <div className="text-xs text-gray-500 mb-2">Take up to 10–20% off with code</div>
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            value={discountCode}
+                            onChange={(e) => setDiscountCode(e.target.value)}
+                            placeholder="Enter Code"
+                            className="flex-1 bg-black/50 text-white px-4 py-2 rounded-xl border border-gray-700 focus:outline-none focus:border-primary"
+                            disabled={!!appliedDiscount}
+                        />
+                         {appliedDiscount ? (
+                             <button 
+                                onClick={() => {
+                                    setAppliedDiscount(null);
+                                    setDiscountCode('');
+                                }}
+                                className="px-4 py-2 bg-red-500/20 text-red-400 rounded-xl font-bold hover:bg-red-500/30 transition-colors"
+                            >
+                                Remove
+                            </button>
+                        ) : (
+                            <button 
+                                onClick={handleApplyDiscount}
+                                className="px-4 py-2 bg-primary/20 text-primary rounded-xl font-bold hover:bg-primary/30 transition-colors"
+                            >
+                                Apply
+                            </button>
+                        )}
+                    </div>
+                    {!appliedDiscount && (
+                        <div className="mt-2 text-xs text-gray-500">
+                            Available Coupon: <button onClick={() => setDiscountCode('tusharthakre800')} className="text-primary font-mono hover:underline ml-1">tusharthakre800</button>
+                        </div>
+                    )}
+                </div>
+
+                {/* Payment Summary */}
+                <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800 space-y-3">
                     <h3 className="font-bold text-sm text-gray-400 uppercase tracking-wider">Order Summary</h3>
                     <div className="flex justify-between text-sm">
                         <span className="text-gray-400">Item Total</span>
@@ -226,6 +292,12 @@ const OrderFood = () => {
                         <span className="text-gray-400">Platform Fee (30%)</span>
                         <span>${platformFee}</span>
                     </div>
+                    {appliedDiscount && (
+                        <div className="flex justify-between text-sm text-green-400">
+                            <span>Discount ({appliedDiscount.code})</span>
+                            <span>-${appliedDiscount.discountAmount}</span>
+                        </div>
+                    )}
                     <div className="h-px bg-gray-800 my-2"></div>
                     <div className="flex justify-between font-bold text-lg">
                         <span>Total</span>

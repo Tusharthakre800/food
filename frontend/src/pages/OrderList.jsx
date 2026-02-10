@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, ShoppingBag, MapPin, Clock, ChefHat, Home as HomeIcon, Bookmark } from 'lucide-react';
 import toast from 'react-hot-toast';
+import BottomBotton from '../bottombtn/BottomBotton';
+
+
 
 const OrderList = () => {
     const navigate = useNavigate();
@@ -162,7 +165,7 @@ const OrderList = () => {
             </div>
 
             {/* Bottom Navigation */}
-            <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
+            {/* <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
                 <Link
                     to="/home"
                     className="flex flex-col items-center gap-1 text-gray-300 hover:text-white transition-colors"
@@ -186,7 +189,8 @@ const OrderList = () => {
                     <ShoppingBag size={24} />
                     <span className="text-[10px] font-medium">Orders</span>
                 </button>
-            </div>
+            </div> */}
+            <BottomBotton />
         </div>
     );
 };

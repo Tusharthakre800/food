@@ -40,4 +40,7 @@ router.post('/order', authMiddleware.authusermiddleware, foodController.createOr
 
 router.get('/order-list', authMiddleware.authusermiddleware, foodController.getOrderList);
 
+router.post('/discount', authMiddleware.authusermiddleware, foodController.applyDiscountCode);
+
+
 module.exports = router;

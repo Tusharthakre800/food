@@ -5,6 +5,7 @@ const saveModel = require('../models/save.model');
 const commentModel = require('../models/comment.model');
 const foodPartnerModel = require('../models/foodpartner.model');
 const orderModel = require('../models/order.model');
+const discountModel = require('../models/discount.model');
 
 
 
@@ -231,6 +232,32 @@ async function getOrderList(req, res) {
     }
 }
 
+async function applyDiscountCode(req, res) {
+    try {
+        const { discountCode } = req.body;
+
+        if (discountCode === 'tusharthakre800') {
+             const discountAmount = Math.floor(Math.random() * 2) + 5; // Random discount between 10 and 20
+             return res.status(200).json({ 
+                 message: 'Discount code applied successfully', 
+                 discount: {
+                     code: 'tusharthakre800',
+                     discountAmount: discountAmount,
+                     minOrderAmount: 0
+                 } 
+             });
+        }
+
+        const discount = await discountModel.findOne({ code: discountCode });
+        if (!discount) {
+            return res.status(404).json({ message: 'Discount code not found' });
+        }
+        res.status(200).json({ message: 'Discount code applied successfully', discount });
+    } catch (error) {
+        res.status(500).json({ message: 'Error applying discount code', error: error.message });
+    }
+}
+
 
 
 module.exports = {
@@ -246,4 +273,5 @@ module.exports = {
     updateFoodItem,
     createOrder,
     getOrderList,
+    applyDiscountCode,
 }

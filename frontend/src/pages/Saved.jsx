@@ -5,6 +5,7 @@ import { ShoppingBag, LogOut, Home as HomeIcon, Bookmark } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import VideoCard from '../components/VideoCard';
 import SkeletonVideoCard from '../components/SkeletonVideoCard';
+import BottomBotton from '../bottombtn/BottomBotton';
 
 const Saved = () => {
   const navigate = useNavigate();
@@ -43,6 +44,9 @@ const Saved = () => {
     return (
       <div className="h-screen w-full bg-black text-white overflow-hidden">
         <SkeletonVideoCard />
+        <SkeletonVideoCard />
+        <SkeletonVideoCard />
+        <SkeletonVideoCard />
       </div>
     );
   }
@@ -57,7 +61,7 @@ const Saved = () => {
                 <ThemeToggle />
             </div> */}
             {/* Bottom Navigation */}
-            <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
+            {/* <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
                 <Link to="/home" className="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors">
                     <HomeIcon size={24} />
                     <span className="text-[10px] font-medium">Home</span>
@@ -72,7 +76,8 @@ const Saved = () => {
                     <ShoppingBag size={24} />
                     <span className="text-[10px] font-medium">Orders</span>
                 </Link>
-            </div>
+            </div> */}
+             <BottomBotton />
         </div>
      )
   }
@@ -90,7 +95,7 @@ const Saved = () => {
       ))}
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
+      {/* <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
         <Link to="/home" className="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors">
             <HomeIcon size={24} />
             <span className="text-[10px] font-medium">Home</span>
@@ -105,7 +110,8 @@ const Saved = () => {
             <ShoppingBag size={24} />
             <span className="text-[10px] font-medium">Orders</span>
         </Link>
-      </div>
+      </div> */}
+      <BottomBotton />
     </div>
   );
 };

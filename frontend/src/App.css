@@ -1,15 +1,11 @@
-App specific styles if needed
+/* App specific styles if needed */
 
+/* 
+   Moved global resets to index.css for better loading order with Tailwind 
+   kept generic font-family here if strictly needed, 
+   but Tailwind usually handles this via config 
+*/
 body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     font-family: 'Arial', sans-serif;
 }
 
-html, body {
-    height: 100vh;
-    width: 100vw;
-    overflow-x: hidden;
-
-}

@@ -4,6 +4,7 @@ import { Mail, ArrowRight, ArrowLeft, KeyRound } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+// import "../App.css"
 
 
 const ForgotPassword = () => {

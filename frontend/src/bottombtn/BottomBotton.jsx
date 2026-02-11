@@ -10,7 +10,7 @@ const BottomBotton = () => {
 
 
     return (
-        <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
+        <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50 pb-safe">
         <Link
           to="/home"
           onClick={() => isActive('/home') && window.scrollTo({ top: 0, behavior: 'smooth' })}

@@ -10,7 +10,6 @@ const VideoCard = ({ item }) => {
     const navigate = useNavigate();
     const videoRef = useRef(null);
     const containerRef = useRef(null);
-    const [isPlaying, setIsPlaying] = useState(true);
     
     // Like state lifted up
     const [isLiked, setIsLiked] = useState(item.isLiked || false);
@@ -79,22 +78,8 @@ const VideoCard = ({ item }) => {
                 setShowLikeAnimation(true);
                 setTimeout(() => setShowLikeAnimation(false), 1000);
             }
-        } else {
-            // Single click - toggle play
-            togglePlay();
         }
         lastClickTime.current = currentTime;
-    };
-
-    const togglePlay = () => {
-        if (videoRef.current) {
-            if (isPlaying) {
-                videoRef.current.pause();
-            } else {
-                videoRef.current.play();
-            }
-            setIsPlaying(!isPlaying);
-        }
     };
 
     return (
@@ -111,14 +96,6 @@ const VideoCard = ({ item }) => {
                     playsInline
                     preload="metadata"
                 />
-                 {/* Play/Pause Overlay Indicator (optional) */}
-                {!isPlaying && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none">
-                        <div className="bg-white/20 p-4 rounded-full backdrop-blur-sm">
-                            <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[20px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
-                        </div>
-                    </div>
-                )}
 
                 {/* Like Animation Overlay */}
                 {showLikeAnimation && (
@@ -166,7 +143,7 @@ const VideoCard = ({ item }) => {
             </div>
 
             {/* Bottom Content Area */}
-            <div className="absolute bottom-9 left-0 w-full p-6 pb-8 z-20 flex flex-col gap-4">
+            <div className="absolute bottom-0 left-0 w-full p-6 pb-[calc(5rem+env(safe-area-inset-bottom))] z-20 flex flex-col gap-4">
                 
                 {/* Info Section */}
                 <div className="flex flex-col gap-2 max-w-[85%]">

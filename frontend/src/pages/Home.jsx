@@ -59,7 +59,7 @@ const Home = () => {
 
   if (foodItems.length === 0) {
      return (
-        <div className="flex flex-col h-screen w-full items-center justify-center bg-black text-white p-6 text-center">
+        <div className="flex flex-col h-[100dvh] w-full items-center justify-center bg-black text-white p-6 text-center">
             <ShoppingBag size={64} className="mb-4 text-gray-500" />
             <h2 className="text-2xl font-bold mb-2">No Food Reels Yet</h2>
             <p className="text-gray-400">Check back later for delicious content!</p>
@@ -71,7 +71,7 @@ const Home = () => {
   }
 
   return (
-    <div className="h-screen w-full bg-black text-white overflow-y-scroll snap-y snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+    <div className="h-[100dvh] w-full bg-black text-white overflow-y-scroll snap-y snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
        <div className="fixed top-5 right-5 z-50">
         <button onClick={handleLogout} className="p-2 bg-black/40 rounded-full backdrop-blur-md text-white hover:bg-red-500/80 transition-all shadow-lg border border-white/10" title="Logout">
             <LogOut size={24} />

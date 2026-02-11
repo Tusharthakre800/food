@@ -37,7 +37,7 @@ async function getFoodItems(req, res) {
         const userId = req.user._id;
         const foodItems = await foodModel.find().lean();
         
-        const userLikes = await likeModel.find({ user: userId });
+        const userLikes = await likeModel.find({ userId: userId });
         const likedFoodIds = new Set(userLikes.map(like => like.food.toString()));
 
         const userSaves = await saveModel.find({ user: userId });
@@ -57,17 +57,17 @@ async function getFoodItems(req, res) {
 
 async function likeFoodItem(req, res) {
     const { foodId } = req.body;
-    const userId = req.user;
+    const userId = req.user._id;
 
-    const existingLike = await likeModel.findOne({ user: userId, food: foodId });
+    const existingLike = await likeModel.findOne({ userId: userId, food: foodId });
     if (existingLike) {
-        await likeModel.deleteOne({ user: userId, food: foodId });
+        await likeModel.deleteOne({ userId: userId, food: foodId });
         await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: -1 } });
         return res.status(200).json({ message: 'food item unliked successfully' });
     }
 
     const like = await likeModel.create({
-        user: userId,
+        userId: userId,
         food: foodId,
     });
     await foodModel.findByIdAndUpdate(foodId, { $inc: { likeCount: 1 } });
@@ -121,7 +121,7 @@ async function getSavedFoodItems(req, res) {
     const userId = req.user._id;
     const savedItems = await saveModel.find({ user: userId }).populate('food').lean();
 
-    const userLikes = await likeModel.find({ user: userId });
+    const userLikes = await likeModel.find({ userId: userId });
     const likedFoodIds = new Set(userLikes.map(like => like.food.toString()));
 
     const savedItemsWithStatus = savedItems.map(item => {

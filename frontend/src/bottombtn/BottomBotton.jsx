@@ -17,7 +17,7 @@ const BottomBotton = () => {
           className={`flex flex-col items-center gap-1 transition-colors ${isActive('/home') ? 'text-primary' : 'text-gray-300 hover:text-white'}`}
         >
           <HomeIcon size={24} />
-          <span className="text-[10px] font-medium">Home</span>
+          <span className="text-[0.625rem] font-medium">Home</span>
         </Link>
 
         <Link
@@ -25,14 +25,14 @@ const BottomBotton = () => {
           className={`flex flex-col items-center gap-1 transition-colors ${isActive('/saved') ? 'text-primary' : 'text-gray-300 hover:text-white'}`}
         >
           <Bookmark size={24} />
-          <span className="text-[10px] font-medium">Saved</span>
+          <span className="text-[0.625rem] font-medium">Saved</span>
         </Link>
         <Link 
           to="/order-list"
           className={`flex flex-col items-center gap-1 transition-colors ${isActive('/order-list') ? 'text-primary' : 'text-gray-300 hover:text-white'}`}
         >
           <ShoppingBag size={24} />
-          <span className="text-[10px] font-medium">Orders</span>
+          <span className="text-[0.625rem] font-medium">Orders</span>
         </Link>
 
       </div>

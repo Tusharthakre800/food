@@ -101,7 +101,7 @@ const VideoCard = ({ item }) => {
                 {showLikeAnimation && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
                         <div className="bg-white/20 p-6 rounded-full backdrop-blur-md animate-like-pop">
-                            <ThumbsUp size={80} className="text-white fill-white drop-shadow-2xl" />
+                            <ThumbsUp className="w-20 h-20 text-white fill-white drop-shadow-2xl" />
                         </div>
                     </div>
                 )}
@@ -110,7 +110,7 @@ const VideoCard = ({ item }) => {
                 {showUnlikeAnimation && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
                         <div className="bg-black/40 p-6 rounded-full backdrop-blur-md animate-dislike-shake">
-                            <ThumbsDown size={80} className="text-white-500 fill-white-500 drop-shadow-2xl" />
+                            <ThumbsDown className="w-20 h-20 text-white-500 fill-white-500 drop-shadow-2xl" />
                         </div>
                     </div>
                 )}
@@ -122,7 +122,7 @@ const VideoCard = ({ item }) => {
             {/* Right Side Actions (Like, Share, etc. - typical for reels) */}
             <div className="absolute right-4 bottom-32 flex flex-col gap-3 z-30 items-center">
                 <LikeButton isLiked={isLiked} likeCount={likeCount} onLike={handleLike} />
-                <Comment item={item} containerRef={containerRef} />
+                <Comment item={item} containerRef={containerRef} commentCount={item.commentCount} />
                 <Save item={item} />
                 <button onClick={handleBuy} className="flex flex-col items-center gap-6 group cursor-pointer">
                     <div className="p-3 bg-black/40 rounded-full backdrop-blur-md group-active:scale-90 transition-transform">
@@ -149,7 +149,7 @@ const VideoCard = ({ item }) => {
                 <div className="flex flex-col gap-2 max-w-[85%]">
                     <div className="flex items-center gap-2">
                         <div className="bg-primary/20 p-1.5 rounded-lg backdrop-blur-md">
-                            <Store size={16} className="text-primary" />
+                            <Store className="w-4 h-4 text-primary" />
                         </div>
                         <h3 className="font-bold text-lg text-white drop-shadow-md">{item.name || "Delicious Dish"}</h3>
                     </div>
@@ -181,7 +181,7 @@ const VideoCard = ({ item }) => {
 
                 {/* Visit Store Button */}
                 <Link to={"/partner/" + item.foodPartnerId} className="w-full bg-primary hover:bg-primary-hover text-white py-3.5 rounded-xl font-bold text-base shadow-lg shadow-primary/20 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
-                    <Store size={18} />
+                    <Store className="w-4.5 h-4.5" />
                     <span>Visit Store</span>
                 </Link>
             </div>

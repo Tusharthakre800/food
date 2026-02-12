@@ -44,13 +44,13 @@ const Comment = ({ item, containerRef }) => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/comment`, 
-                { foodId: item._id, content: commentText },
+                { foodId: item._id, content: commentText , commentCount: commentCount + 1 },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             
             // Add new comment to list
             setComments([response.data.comment, ...comments]);
-            setCommentCount(prev => prev + 1);
+            setCommentCount(commentCount + 1);
             setCommentText('');
         } catch (error) {
             console.error("Error posting comment:", error);

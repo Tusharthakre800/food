@@ -57,9 +57,9 @@ const SkeletonPartnerProfile = () => {
                     <div className="h-4 w-16 bg-gray-800 rounded"></div>
                 </div>
                 
-                <div className="grid grid-cols-3 gap-1">
-                    {[1, 2, 3, 4, 5, 6].map((item) => (
-                        <div key={item} className="aspect-[3/4] bg-gray-900 rounded-md"></div>
+                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1">
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+                        <div key={item} className="aspect-square bg-gray-900 rounded-md"></div>
                     ))}
                 </div>
             </div>

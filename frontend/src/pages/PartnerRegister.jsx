@@ -74,10 +74,10 @@ const PartnerRegister = () => {
       </div>
 
       {/* Right Side - Register Form */}
-      <div className="w-full lg:w-1/2 h-full overflow-y-auto">
+      <div className="w-full lg:w-1/2 h-full overflow-y-auto mt-12 lg:mt-0">
         <div className="min-h-full flex items-center justify-center p-4 sm:p-8">
           <div className="w-full max-w-md space-y-6">
-            <div className="text-center lg:text-left">
+            <div className="text-center lg:text-left pt-4 lg:pt-0">
               <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wide mb-2">
                 For Restaurants
               </div>

@@ -38,9 +38,9 @@ const PartnerForgotPassword = () => {
         <ThemeToggle />
       </div>
 
-      <div className="w-full flex items-center justify-center p-6 sm:p-12">
+      <div className="w-full flex items-center justify-center p-6 sm:p-12 mt-12 lg:mt-0">
         <div className="w-full max-w-md space-y-8 bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800">
-          <div className="text-center">
+          <div className="text-center pt-4 lg:pt-0">
             <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
               <KeyRound className="h-6 w-6 text-primary" />
             </div>

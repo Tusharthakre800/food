@@ -79,9 +79,9 @@ const UserLogin = () => {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 mt-12 lg:mt-0">
         <div className="w-full max-w-md space-y-8">
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-left pt-4 lg:pt-0">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
               Welcome Back!
             </h1>

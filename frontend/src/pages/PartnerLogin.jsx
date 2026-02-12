@@ -88,9 +88,9 @@ const PartnerLogin = () => {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 mt-12 lg:mt-0">
         <div className="w-full max-w-md space-y-8">
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-left pt-4 lg:pt-0">
             <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wide mb-4">
               Partner Portal
             </div>

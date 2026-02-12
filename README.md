@@ -22,6 +22,7 @@ This monorepo contains the source code for the full-stack application:
 ### Frontend
 - **React (Vite)**
 - **Tailwind CSS**
+- **GSAP (Animations)**
 - **Axios**
 - **React Router DOM**
 - **React Hot Toast**
@@ -30,7 +31,7 @@ This monorepo contains the source code for the full-stack application:
 - **Node.js & Express**
 - **MongoDB (Mongoose)**
 - **JWT Authentication**
-- **ImageKit** (for media storage)
+- **Cloudinary** (for media storage)
 
 ## 🏁 Getting Started
 

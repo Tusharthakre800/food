@@ -9,7 +9,8 @@ This is the backend for the Food App, a TikTok-style food delivery and discovery
   - **Partner Auth**: Register, Login, Logout (JWT-based).
 - **Food Items**:
   - CRUD operations for food items (Create, Read, Update, Delete).
-  - Video upload and streaming support (via ImageKit/Storage Service).
+  - Video upload and streaming support (via Cloudinary).
+  - Search functionality with case-insensitive regex.
 - **Engagement**:
   - Likes (toggle like/unlike).
   - Comments (add, get).
@@ -27,7 +28,7 @@ This is the backend for the Food App, a TikTok-style food delivery and discovery
 - **Framework**: Express.js
 - **Database**: MongoDB (Mongoose ODM)
 - **Authentication**: JSON Web Tokens (JWT), bcryptjs
-- **File Storage**: ImageKit (implied by dependencies/usage)
+- **File Storage**: Cloudinary (Media storage & optimization)
 - **Logging**: Morgan
 - **Other**: UUID, Cors, Cookie-Parser, Dotenv
 
@@ -50,7 +51,9 @@ Create a `.env` file in the root of the `backend` directory with the following v
 PORT=3000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
-# Add other necessary variables (e.g., ImageKit credentials)
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 ```
 
 ## Running the Server
@@ -74,6 +77,7 @@ JWT_SECRET=your_jwt_secret
 
 ### Food Items
 - `GET /api/food` - Get all food items (feed)
+- `GET /api/food/search?q=query` - Search food items
 - `POST /api/food/create` - Create a new food item (Partner only)
 - `PUT /api/food/:id` - Update a food item
 - `DELETE /api/food/:id` - Delete a food item

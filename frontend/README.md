@@ -11,8 +11,8 @@ This is the frontend for the Food App, a TikTok-style food discovery and deliver
 - **User Experience**:
   - **Authentication**: User and Partner login/registration flows.
   - **Dark Mode**: Default dark theme with glassmorphism UI elements.
-  - **Animations**: Smooth transitions using Tailwind CSS and custom animations.
-  - **Toast Notifications**: Interactive alerts using `react-hot-toast`.
+  - **Animations**: Premium, interactive animations using **GSAP** and Tailwind CSS.
+- **Toast Notifications**: Interactive alerts using `react-hot-toast`.
 - **Ordering System**:
   - **Order Flow**: Buy button -> Order Summary -> Address Edit -> Order Processing Animation -> Success.
   - **Address Management**: Edit and save delivery address during checkout.
@@ -28,6 +28,7 @@ This is the frontend for the Food App, a TikTok-style food discovery and deliver
 
 - **Framework**: React (Vite)
 - **Styling**: Tailwind CSS
+- **Animations**: GSAP (GreenSock Animation Platform)
 - **Routing**: React Router DOM
 - **HTTP Client**: Axios
 - **Icons**: Lucide React

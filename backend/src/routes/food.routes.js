@@ -40,6 +40,8 @@ router.post('/order', authMiddleware.authusermiddleware, foodController.createOr
 
 router.get('/order-list', authMiddleware.authusermiddleware, foodController.getOrderList);
 
+router.get('/search', authMiddleware.authusermiddleware, foodController.searchFoodItems);
+
 router.post('/discount', authMiddleware.authusermiddleware, foodController.applyDiscountCode);
 
 

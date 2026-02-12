@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Store, Share2, ThumbsUp, ThumbsDown } from 'lucide-react';
 import axios from 'axios';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import LikeButton from './LikeButton';
 import Comment from './Comment';
 import Save from './Save';
@@ -10,6 +12,10 @@ const VideoCard = ({ item }) => {
     const navigate = useNavigate();
     const videoRef = useRef(null);
     const containerRef = useRef(null);
+    const contentRef = useRef(null);
+    const actionsRef = useRef(null);
+    const likeOverlayRef = useRef(null);
+    const unlikeOverlayRef = useRef(null);
     
     // Like state lifted up
     const [isLiked, setIsLiked] = useState(item.isLiked || false);
@@ -18,6 +24,50 @@ const VideoCard = ({ item }) => {
     const [showUnlikeAnimation, setShowUnlikeAnimation] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const lastClickTime = useRef(0);
+
+    // GSAP Animations for Like/Unlike Overlays
+    useGSAP(() => {
+        if (showLikeAnimation) {
+            gsap.fromTo(likeOverlayRef.current, 
+                { scale: 0, opacity: 0 },
+                { scale: 1.2, opacity: 1, duration: 0.3, ease: "back.out(1.7)" }
+            );
+            gsap.to(likeOverlayRef.current, {
+                scale: 0.8, opacity: 0, delay: 0.7, duration: 0.2, ease: "power2.in"
+            });
+        }
+    }, [showLikeAnimation]);
+
+    useGSAP(() => {
+        if (showUnlikeAnimation) {
+            gsap.fromTo(unlikeOverlayRef.current, 
+                { scale: 0, opacity: 0 },
+                { scale: 1.2, opacity: 1, duration: 0.3, ease: "back.out(1.7)" }
+            );
+            gsap.to(unlikeOverlayRef.current, {
+                scale: 0.8, opacity: 0, delay: 0.7, duration: 0.2, ease: "power2.in"
+            });
+        }
+    }, [showUnlikeAnimation]);
+
+    // Entrance animation for content and actions
+    useGSAP(() => {
+        gsap.from(contentRef.current, {
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            delay: 0.2
+        });
+        gsap.from(actionsRef.current.children, {
+            x: 50,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+            delay: 0.4
+        });
+    }, { scope: containerRef });
 
     const handleLike = async (e) => {
         e?.stopPropagation();
@@ -45,18 +95,8 @@ const VideoCard = ({ item }) => {
         } catch (error) {
             console.error("Error liking food item:", error);
             // Revert on error
-            setIsLiked(isLiked); // Revert to original state (which was isLiked before update)
-            setLikeCount(prev => isLiked ? prev + 1 : prev - 1); // Logic: if original was true (so we made it false), now revert to true (add 1). If original was false (we made it true), revert to false (sub 1).
-            // Wait, logic check:
-            // Original: false. New: true. Count: +1.
-            // Revert: setIsLiked(false). Count: sub 1.
-            // isLiked (closure) is false.
-            // setLikeCount(prev => false ? ... : prev - 1) -> prev - 1. Correct.
-            
-            // Original: true. New: false. Count: -1.
-            // Revert: setIsLiked(true). Count: add 1.
-            // isLiked (closure) is true.
-            // setLikeCount(prev => true ? prev + 1 : ...) -> prev + 1. Correct.
+            setIsLiked(isLiked); 
+            setLikeCount(prev => isLiked ? prev + 1 : prev - 1);
         }
     };
 
@@ -100,8 +140,8 @@ const VideoCard = ({ item }) => {
 
                     {/* Like Animation Overlay */}
                     {showLikeAnimation && (
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
-                            <div className="bg-white/20 p-6 rounded-full backdrop-blur-md animate-like-pop">
+                        <div ref={likeOverlayRef} className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
+                            <div className="bg-white/20 p-6 rounded-full backdrop-blur-md">
                                 <ThumbsUp className="w-20 h-20 text-white fill-white drop-shadow-2xl" />
                             </div>
                         </div>
@@ -109,8 +149,8 @@ const VideoCard = ({ item }) => {
                     
                     {/* Unlike Animation Overlay */}
                     {showUnlikeAnimation && (
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
-                            <div className="bg-black/40 p-6 rounded-full backdrop-blur-md animate-dislike-shake">
+                        <div ref={unlikeOverlayRef} className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
+                            <div className="bg-black/40 p-6 rounded-full backdrop-blur-md">
                                 <ThumbsDown className="w-20 h-20 text-white-500 fill-white-500 drop-shadow-2xl" />
                             </div>
                         </div>
@@ -121,7 +161,7 @@ const VideoCard = ({ item }) => {
                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90 pointer-events-none z-10"></div>
 
                 {/* Right Side Actions */}
-                <div className="absolute right-4 bottom-35 flex flex-col gap-3 z-30 items-center">
+                <div ref={actionsRef} className="absolute right-4 bottom-35 flex flex-col gap-3 z-30 items-center">
                     <LikeButton isLiked={isLiked} likeCount={likeCount} onLike={handleLike} />
                     <Comment item={item} containerRef={containerRef} commentCount={item.commentCount} />
                     <Save item={item} />
@@ -137,7 +177,7 @@ const VideoCard = ({ item }) => {
                 </div>
 
                 {/* Bottom Content Area */}
-                <div className="absolute bottom-0 left-0 w-full p-6 pb-[calc(5rem+env(safe-area-inset-bottom))] z-20 flex flex-col gap-4">
+                <div ref={contentRef} className="absolute bottom-0 left-0 w-full p-6 pb-[calc(5rem+env(safe-area-inset-bottom))] z-20 flex flex-col gap-4">
                     
                     {/* Info Section */}
                     <div className="flex flex-col gap-2 max-w-[85%]">

@@ -65,6 +65,12 @@ const CreateFoodPartner = () => {
       return;
     }
 
+    if (!videoFile) {
+      toast.error("Please upload a food video.");
+      setLoading(false);
+      return;
+    }
+
     const data = new FormData();
     data.append('name', formData.name);
     data.append('price', formData.price);
@@ -157,7 +163,6 @@ const CreateFoodPartner = () => {
                     accept="video/*" 
                     onChange={handleFileChange} 
                     className="hidden" 
-                    required 
                 />
             </label>
             {videoPreview && (

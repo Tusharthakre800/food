@@ -13,23 +13,81 @@ const { v4: uuidv4 } = require('uuid');
 
 
 async function createFoodItem(req, res) {
+    try {
+        if (!req.foodPartner) {
+            return res.status(401).json({ message: 'please login first' });
+        }
 
+        if (!req.file) {
+            return res.status(400).json({ message: 'Please upload a video/image for the food item' });
+        }
 
-    const fileuploadresult = await storageService.uploadFile(req.file.buffer,uuidv4());
-    if (!req.foodPartner) {
-        return res.status(401).json({ message: 'please login first' });
+        const fileuploadresult = await storageService.uploadFile(req.file.buffer, uuidv4());
+        
+        const foodItem = await foodModel.create({
+            name: req.body.name,
+            price: req.body.price,
+            video: fileuploadresult.url,
+            description: req.body.description,
+            category: req.body.category,
+            foodPartnerId: req.foodPartner._id,
+        });
+      
+        res.status(201).json({ message: 'food item created successfully', food: foodItem });
+    } catch (error) {
+        console.error("Error in createFoodItem:", error);
+        res.status(500).json({ message: 'Error creating food item', error: error.message });
     }
-    const foodItem = await foodModel.create({
-        name: req.body.name,
-        price: req.body.price,
-        video: fileuploadresult.url,
-        description: req.body.description,
-        category: req.body.category,
-        foodPartnerId: req.foodPartner._id,
-    });
-  
-    res.status(201).json({ message: 'food item created successfully', food: foodItem });
+}
 
+/**
+ * Searches for food items based on a query string
+ * Searches in name, description, and category
+ */
+async function searchFoodItems(req, res) {
+    try {
+        const { q } = req.query;
+        if (!q) {
+            return res.status(400).json({ message: 'Search query is required' });
+        }
+
+        const userId = req.user ? req.user._id : null;
+        
+        // Case-insensitive search using regex
+        const searchRegex = new RegExp(q, 'i');
+        
+        const foodItems = await foodModel.find({
+            $or: [
+                { name: searchRegex },
+                { description: searchRegex },
+                { category: searchRegex }
+            ]
+        }).lean();
+
+        // If user is logged in, add like/save status
+        let results = foodItems;
+        if (userId) {
+            const userLikes = await likeModel.find({ userId: userId });
+            const likedFoodIds = new Set(userLikes.map(like => like.food.toString()));
+
+            const userSaves = await saveModel.find({ user: userId });
+            const savedFoodIds = new Set(userSaves.map(save => save.food.toString()));
+
+            results = foodItems.map(item => ({
+                ...item,
+                isLiked: likedFoodIds.has(item._id.toString()),
+                isSaved: savedFoodIds.has(item._id.toString())
+            }));
+        }
+
+        res.status(200).json({ 
+            message: `Found ${results.length} items matching "${q}"`, 
+            foodItems: results 
+        });
+    } catch (error) {
+        console.error("Error in searchFoodItems:", error);
+        res.status(500).json({ message: 'Error searching food items', error: error.message });
+    }
 }
 
 async function getFoodItems(req, res) {
@@ -274,4 +332,5 @@ module.exports = {
     createOrder,
     getOrderList,
     applyDiscountCode,
+    searchFoodItems,
 }

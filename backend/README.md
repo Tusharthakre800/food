@@ -17,7 +17,10 @@ This is the backend for the Food App, a TikTok-style food delivery and discovery
   - Save items (bookmarking).
 - **Ordering**:
   - Place orders with address and quantity.
+  - Standardized status workflow: `pending`, `confirmed`, `cancelled`, `out-for-delivery`, `delivered`.
   - Cash on Delivery (COD) support.
+- **User Profile Enrichment**:
+  - Dynamic fetching of order and saved item counts.
 - **Middleware**:
   - Authentication middleware for protecting routes.
   - File upload handling (Multer).

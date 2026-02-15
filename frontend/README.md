@@ -15,8 +15,13 @@ This is the frontend for the Food App, a TikTok-style food discovery and deliver
 - **Toast Notifications**: Interactive alerts using `react-hot-toast`.
 - **Ordering System**:
   - **Order Flow**: Buy button -> Order Summary -> Address Edit -> Order Processing Animation -> Success.
+  - **Status Badges**: Color-coded status tracking for all orders.
   - **Address Management**: Edit and save delivery address during checkout.
   - **Pricing**: Dynamic calculation with quantity and platform fees.
+- **Enhanced UI/UX**:
+  - **Skeleton Loaders**: Specialized shimmer effects for Profile and Policy pages.
+  - **Error Handling**: Dedicated 404/Error page with recovery actions.
+  - **Legal Center**: Dedicated Policy page for legal information.
 - **Social Features**:
   - Like, Comment, and Save food items.
   - Visit Partner Profiles to see their menu.
@@ -72,7 +77,10 @@ VITE_BASE_URL=http://localhost:3000
 
 - `VideoCard.jsx`: The core feed component displaying video, info, and interactions.
 - `OrderFood.jsx`: The checkout page with address editing and order processing.
-- `PartnerProfile.jsx`: Profile page for food partners displaying their menu.
+- `UserProfile.jsx`: User profile with dynamic stats and address management.
+- `UserProfileskeleton.jsx`: Shimmer loading state for the user profile.
+- `PolicyPage.jsx`: Legal hub with privacy and terms info.
+- `ErrorPage.jsx`: Modern 404/Error recovery page.
 - `AppRouter.jsx`: Centralized routing configuration.
 
 ## Directory Structure

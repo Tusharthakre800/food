@@ -13,9 +13,11 @@ This monorepo contains the source code for the full-stack application:
 
 - **Video Feed**: Immersive, vertical scrolling video feed for food discovery.
 - **Dual Authentication**: Separate login/registration flows for Users and Food Partners.
-- **Food Ordering**: Seamless checkout process with address management and dynamic pricing.
+- **Food Ordering**: Seamless checkout process with address management and dynamic status tracking (Pending, Confirmed, etc.).
 - **Social Engagement**: Like, comment, and save favorite food items.
+- **User Profile**: Dynamic stats for orders and saved items, plus address management.
 - **Partner Dashboard**: Tools for partners to upload dishes and manage their menu.
+- **Legal & Help**: Dedicated Policy and Error pages with specialized skeleton loaders.
 
 ## 🛠️ Tech Stack
 

@@ -16,7 +16,6 @@ const Home = () => {
   const [foodItems, setFoodItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
-  const logoutBtnRef = useRef(null);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -46,18 +45,7 @@ const Home = () => {
     fetchFood();
   }, []);
 
-  // GSAP Entrance Animation for UI elements
-  useGSAP(() => {
-    if (!loading) {
-      gsap.from(logoutBtnRef.current, {
-        x: 50,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        delay: 0.5
-      });
-    }
-  }, [loading]);
+  
 
   if (loading) {
     return (
@@ -83,10 +71,9 @@ const Home = () => {
   }
 
   return (
-    <div ref={containerRef} className="h-[100dvh] w-full bg-black text-white overflow-y-scroll snap-y snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+    <div ref={containerRef} className="h-[100dvh] w-full bg-black text-white overflow-y-scroll snap-y snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] z-50">
        <div className="fixed top-5 right-5 z-50">
         <button 
-          ref={logoutBtnRef}
           onClick={handleLogout} 
           className="p-2 bg-black/40 rounded-full backdrop-blur-md text-white hover:bg-red-500/80 transition-all shadow-lg border border-white/10" 
           title="Logout"

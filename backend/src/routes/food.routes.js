@@ -2,21 +2,19 @@ const express = require('express');
 const foodController = require('../controller/food.controller');
 const authMiddleware = require('../middleware/auth.middleware');
 
+
 // const commentModel = require('../models/comment.model');
 // const saveModel = require('../models/save.model');
 
 
 
 const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 
 const router = express.Router();
-const upload = multer({ 
-    storage: multer.memoryStorage(),
-});
 
-
-
-router.post('/', authMiddleware.authfoodpartnermiddleware, upload.single('video'), foodController.createFoodItem);
+// router.post('/', authMiddleware.authfoodpartnermiddleware, upload.single('video'), foodController.createFoodItem);
+router.post('/create-food', authMiddleware.authfoodpartnermiddleware, upload.fields([{ name: 'video', maxCount: 1 }, { name: 'images', maxCount: 10 }]), foodController.createFoodItem);
 
 router.get('/', authMiddleware.authusermiddleware, foodController.getFoodItems);
 
@@ -43,6 +41,18 @@ router.get('/order-list', authMiddleware.authusermiddleware, foodController.getO
 router.get('/search', authMiddleware.authusermiddleware, foodController.searchFoodItems);
 
 router.post('/discount', authMiddleware.authusermiddleware, foodController.applyDiscountCode);
+
+router.post('/order-cancel', authMiddleware.authusermiddleware, foodController.cancelOrder);
+
+router.get('/user/profile', authMiddleware.authusermiddleware, foodController.getUserProfile);
+
+router.post('/user/address', authMiddleware.authusermiddleware, foodController.addAddress);
+
+router.delete('/user/address/:addressId', authMiddleware.authusermiddleware, foodController.deleteAddress);
+
+router.patch('/user/address/:addressId/default', authMiddleware.authusermiddleware, foodController.setDefaultAddress);
+
+router.post('/user/profile-pic', authMiddleware.authusermiddleware, upload.single('profilePic'), foodController.updateProfilePic);
 
 
 module.exports = router;

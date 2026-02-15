@@ -1,11 +1,14 @@
 const foodModel = require('../models/fooditem.model');
-const storageService = require('../services/storage.service');
 const likeModel = require('../models/like.model');
 const saveModel = require('../models/save.model');
 const commentModel = require('../models/comment.model');
 const foodPartnerModel = require('../models/foodpartner.model');
-const orderModel = require('../models/order.model');
 const discountModel = require('../models/discount.model');
+const userModel = require('../models/user.model');
+const orderModel = require('../models/order.model');
+const orderCancelModel = require('../models/ordercancel.model');
+const storageService = require('../services/storage.service');
+
 
 
 
@@ -283,7 +286,7 @@ async function createOrder(req, res) {
 async function getOrderList(req, res) {
     try {
         const userId = req.user._id;
-        const orders = await orderModel.find({ userId }).populate('foodPartnerId', 'name profilePicture');
+        const orders = await orderModel.find({ userId }).populate('foodPartnerId', 'fullname');
         res.status(200).json({ message: 'Order list fetched successfully', orders });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching order list', error: error.message });
@@ -316,7 +319,172 @@ async function applyDiscountCode(req, res) {
     }
 }
 
+ async function cancelOrder(req, res) {
+        try {
+            const { orderId, cancelReason } = req.body;
+            const userId = req.user._id;
+    
+            if (!orderId || !cancelReason) {
+                return res.status(400).json({ message: 'Order ID and cancellation reason are required' });
+            }
+    
+            // Check if the order exists and belongs to the user
+            const order = await orderModel.findOne({ _id: orderId, userId: userId });
+            if (!order) {
+                return res.status(404).json({ message: 'Order not found or unauthorized' });
+            }
+    
+            // Check if the order is already cancelled
+            if (order.status === 'cancelled') {
+                return res.status(400).json({ message: 'Order is already cancelled' });
+            }
+    
+            // Create the cancellation record
+            const cancellation = await orderCancelModel.create({
+                orderId,
+                userId,
+                cancelReason
+            });
+    
+            // Update the order status to 'cancelled'
+            order.status = 'cancelled';
+            await order.save();
+    
+            res.status(201).json({ 
+                message: 'Order cancelled successfully', 
+                cancellation 
+            });
+        } catch (error) {
+            console.error("Error in cancelOrder:", error);
+            res.status(500).json({ message: 'Error cancelling order', error: error.message });
+        }
+    }
 
+
+async function getUserProfile(req, res) {
+    try {
+        const userId = req.user._id;
+        const user = await userModel.findById(userId).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Fetch counts for orders and saved items
+        const orderCount = await orderModel.countDocuments({ userId });
+        const savedCount = await saveModel.countDocuments({ user: userId });
+
+        res.status(200).json({ 
+            message: 'User profile fetched successfully', 
+            user: {
+                ...user.toObject(),
+                orderCount,
+                savedCount
+            } 
+        });
+    } catch (error) {
+        console.error("Error in getUserProfile:", error);
+        res.status(500).json({ message: 'Error fetching user profile', error: error.message });
+    }
+}
+
+async function addAddress(req, res) {
+    try {
+        const userId = req.user._id;
+        const { label, detail, isDefault } = req.body;
+
+        if (!detail) {
+            return res.status(400).json({ message: 'Address detail is required' });
+        }
+
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // If this is the first address or isDefault is yes, set others to no
+        if (user.addresses.length === 0 || isDefault === 'yes') {
+            user.addresses.forEach(addr => addr.isDefault = 'no');
+        }
+
+        user.addresses.push({ label: label || 'Home', detail, isDefault: user.addresses.length === 0 ? 'yes' : (isDefault || 'no') });
+        await user.save();
+
+        res.status(200).json({ message: 'Address added successfully', addresses: user.addresses });
+    } catch (error) {
+        res.status(500).json({ message: 'Error adding address', error: error.message });
+    }
+}
+
+async function deleteAddress(req, res) {
+    try {
+        const userId = req.user._id;
+        const { addressId } = req.params;
+
+        const user = await userModel.findById(userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        const addressIndex = user.addresses.findIndex(addr => addr._id.toString() === addressId);
+        if (addressIndex === -1) return res.status(404).json({ message: 'Address not found' });
+
+        const wasDefault = user.addresses[addressIndex].isDefault === 'yes';
+        user.addresses.splice(addressIndex, 1);
+
+        // If we deleted the default address, set the first one as default if it exists
+        if (wasDefault && user.addresses.length > 0) {
+            user.addresses[0].isDefault = 'yes';
+        }
+
+        await user.save();
+        res.status(200).json({ message: 'Address deleted successfully', addresses: user.addresses });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting address', error: error.message });
+    }
+}
+
+async function setDefaultAddress(req, res) {
+    try {
+        const userId = req.user._id;
+        const { addressId } = req.params;
+
+        const user = await userModel.findById(userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        user.addresses.forEach(addr => {
+            addr.isDefault = addr._id.toString() === addressId ? 'yes' : 'no';
+        });
+
+        await user.save();
+        res.status(200).json({ message: 'Default address updated', addresses: user.addresses });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating default address', error: error.message });
+    }
+}
+
+async function updateProfilePic(req, res) {
+    try {
+        const userId = req.user._id;
+        if (!req.file) {
+            return res.status(400).json({ message: 'No image file provided' });
+        }
+
+        const user = await userModel.findById(userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        // Upload to Cloudinary
+        const uploadResult = await storageService.uploadFile(req.file.buffer, `profile_${userId}_${Date.now()}`);
+        
+        user.profilePic = uploadResult.secure_url;
+        await user.save();
+
+        res.status(200).json({ 
+            message: 'Profile picture updated successfully', 
+            profilePic: user.profilePic 
+        });
+    } catch (error) {
+        console.error("Error updating profile pic:", error);
+        res.status(500).json({ message: 'Error updating profile picture', error: error.message });
+    }
+}
 
 module.exports = {
     createFoodItem,
@@ -333,4 +501,10 @@ module.exports = {
     getOrderList,
     applyDiscountCode,
     searchFoodItems,
+    cancelOrder,
+    getUserProfile,
+    addAddress,
+    deleteAddress,
+    setDefaultAddress,
+    updateProfilePic,
 }

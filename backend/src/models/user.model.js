@@ -13,10 +13,21 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     match: [/^\S+@\S+\.\S+$/, 'Invalid email'],
+    index: true,
+
   },
   password: {
     type: String,
     required: true,
+  },
+  addresses: [{
+    label: { type: String, default: 'Home' }, // Home, Work, etc.
+    detail: { type: String, required: true },
+    isDefault: { type: String, default: 'no' } // yes, no
+  }],
+  profilePic: {
+    type: String,
+    default: '',
   },
   resetPasswordToken: {
     type: String,

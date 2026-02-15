@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingBag, LogOut, Home as HomeIcon, Bookmark } from 'lucide-react';
+import { ShoppingBag, LogOut, Home as HomeIcon, Bookmark, ArrowLeft } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import VideoCard from '../components/VideoCard';
 import SkeletonVideoCard from '../components/SkeletonVideoCard';
@@ -83,7 +83,15 @@ const Saved = () => {
   }
 
   return (
-    <div className="h-screen w-full bg-black text-white overflow-y-scroll snap-y snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+    <div className="h-screen w-full text-white overflow-y-scroll snap-y snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+      <div className="sticky top-0 z-10  p-4 flex items-center gap-4 ">
+        <button 
+          onClick={() => navigate(-1)}
+          className="p-2 hover:bg-zinc-800 rounded-full transition-colors"
+        >
+          <ArrowLeft size={24} />
+        </button>
+      </div>
        <div className="fixed top-5 right-5 z-50">
         <button onClick={handleLogout} className="p-2 bg-black/40 rounded-full backdrop-blur-md text-white hover:bg-red-500/80 transition-all shadow-lg border border-white/10" title="Logout">
             <LogOut size={24} />

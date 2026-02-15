@@ -12,6 +12,7 @@ const foodPartnerSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     match: [/^\S+@\S+\.\S+$/, 'Invalid email'],
+    index: true,
   },
   address: {
     type: String,

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate , Link} from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { ArrowLeft, Minus, Plus, ShoppingBag, CreditCard, Clock, MapPin, CheckCircle, Loader, Utensils, Wallet } from 'lucide-react';
+import { ArrowLeft, Minus, Plus, ShoppingBag, CreditCard, Clock, MapPin, CheckCircle, Loader, Utensils, Wallet, ChevronDown, Check, Home as HomeIcon, Briefcase } from 'lucide-react';
 
 const ProcessingOverlay = ({ step }) => {
     if (step === 0) return null;
@@ -47,8 +47,9 @@ const OrderFood = () => {
     
     const [quantity, setQuantity] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [address, setAddress] = useState("123 Food Street, Tasty City");
-    const [isEditingAddress, setIsEditingAddress] = useState(false);
+    const [user, setUser] = useState(null);
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    const [showAddressDropdown, setShowAddressDropdown] = useState(false);
     const [processingStep, setProcessingStep] = useState(0);
     const [discountCode, setDiscountCode] = useState('');
     const [appliedDiscount, setAppliedDiscount] = useState(null);
@@ -60,6 +61,29 @@ const OrderFood = () => {
             navigate('/home');
         }
     }, [item, navigate]);
+
+    // Fetch user profile for addresses
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
+
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/user/profile`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (response.data?.user) {
+                    setUser(response.data.user);
+                    const defaultAddr = response.data.user.addresses?.find(a => a.isDefault === 'yes') || response.data.user.addresses?.[0];
+                    setSelectedAddress(defaultAddr);
+                }
+            } catch (error) {
+                console.error("Error fetching user for addresses:", error);
+            }
+        };
+        fetchUser();
+    }, []);
 
     if (!item) return null;
 
@@ -101,6 +125,12 @@ const OrderFood = () => {
     };
 
     const handlePlaceOrder = async () => {
+        if (!selectedAddress) {
+            toast.error("Please add a delivery address first");
+            navigate('/user/profile');
+            return;
+        }
+
         setLoading(true);
         setProcessingStep(1); // Start Step 1: Verifying
 
@@ -123,7 +153,7 @@ const OrderFood = () => {
                     price: price
                 }],
                 totalPrice: parseFloat(finalTotal),
-                address: address
+                address: `${selectedAddress.label}: ${selectedAddress.detail}`
             };
 
             await axios.post(
@@ -153,8 +183,6 @@ const OrderFood = () => {
             toast.error(error.response?.data?.message || "Failed to place order");
         } finally {
             setLoading(false);
-            // Don't reset processingStep here if successful, because we navigated away. 
-            // If we stayed, we would reset.
         }
     };
 
@@ -205,35 +233,86 @@ const OrderFood = () => {
 
                 {/* Delivery Info */}
                 <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800 space-y-4">
-                    <h3 className="font-bold text-sm text-gray-400 uppercase tracking-wider">Delivery Details</h3>
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-blue-500/20 text-blue-400 rounded-full">
-                            <MapPin size={20} />
-                        </div>
-                        <div className="flex-1">
-                            <p className="font-bold text-sm">Home Address</p>
-                            {isEditingAddress ? (
-                                <input 
-                                    type="text" 
-                                    value={address} 
-                                    onChange={(e) => setAddress(e.target.value)}
-                                    className="w-full bg-black/50 text-xs text-white p-1 rounded border border-gray-700 focus:outline-none focus:border-primary mt-1"
-                                    autoFocus
-                                />
-                            ) : (
-                                <p className="text-xs text-gray-500">{address}</p>
-                            )}
-                        </div>
-                        <button 
-                            onClick={() => setIsEditingAddress(!isEditingAddress)} 
-                            className="text-primary text-xs font-bold hover:underline"
-                        >
-                            {isEditingAddress ? 'Save' : 'Change'}
-                        </button>
+                    <div className="flex items-center justify-between">
+                        <h3 className="font-bold text-sm text-gray-400 uppercase tracking-wider">Delivery Details</h3>
+                        <Link to="/user/profile" className="text-primary text-xs font-bold flex items-center gap-1 hover:underline">
+                            <Plus size={12} /> Manage
+                        </Link>
                     </div>
-                    <div className="flex items-center gap-3">
+
+                    <div className="relative">
+                        <button 
+                            onClick={() => setShowAddressDropdown(!showAddressDropdown)}
+                            className="w-full flex items-center gap-3 p-3 bg-black/50 rounded-xl border border-gray-700 hover:border-gray-600 transition-all text-left group"
+                        >
+                            <div className="p-2 bg-blue-500/20 text-blue-400 rounded-full group-hover:bg-blue-500/30 transition-colors">
+                                {selectedAddress?.label === 'Home' ? <HomeIcon size={18} /> : 
+                                 selectedAddress?.label === 'Work' ? <Briefcase size={18} /> : 
+                                 <MapPin size={18} />}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2">
+                                    <p className="font-bold text-sm">{selectedAddress?.label || 'Select Address'}</p>
+                                    {selectedAddress?.isDefault === 'yes' && (
+                                        <span className="text-[8px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full font-bold uppercase">Default</span>
+                                    )}
+                                </div>
+                                <p className="text-xs text-gray-500 truncate">{selectedAddress?.detail || 'No address saved yet'}</p>
+                            </div>
+                            <ChevronDown size={18} className={`text-gray-500 transition-transform duration-300 ${showAddressDropdown ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        {/* Address Dropdown */}
+                        {showAddressDropdown && (
+                            <div className="absolute top-full left-0 w-full mt-2 bg-gray-900 border border-gray-700 rounded-2xl shadow-2xl z-20 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                                {user?.addresses && user.addresses.length > 0 ? (
+                                    <div className="max-h-60 overflow-y-auto">
+                                        {user.addresses.map((addr) => (
+                                            <button
+                                                key={addr._id}
+                                                onClick={() => {
+                                                    setSelectedAddress(addr);
+                                                    setShowAddressDropdown(false);
+                                                }}
+                                                className={`w-full flex items-start gap-3 p-4 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0 text-left ${
+                                                    selectedAddress?._id === addr._id ? 'bg-primary/5' : ''
+                                                }`}
+                                            >
+                                                <div className={`mt-0.5 p-1.5 rounded-lg ${
+                                                    addr.label === 'Home' ? 'bg-blue-500/10 text-blue-400' :
+                                                    addr.label === 'Work' ? 'bg-purple-500/10 text-purple-400' :
+                                                    'bg-gray-800 text-gray-500'
+                                                }`}>
+                                                    {addr.label === 'Home' ? <HomeIcon size={14} /> : 
+                                                     addr.label === 'Work' ? <Briefcase size={14} /> : 
+                                                     <MapPin size={14} />}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="flex items-center justify-between mb-1">
+                                                        <span className="font-bold text-sm">{addr.label}</span>
+                                                        {selectedAddress?._id === addr._id && <Check size={16} className="text-primary" />}
+                                                    </div>
+                                                    <p className="text-xs text-gray-400 line-clamp-2">{addr.detail}</p>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="p-8 text-center">
+                                        <MapPin size={32} className="mx-auto text-gray-700 mb-2 opacity-20" />
+                                        <p className="text-xs text-gray-500">No saved addresses</p>
+                                        <Link to="/user/profile" className="text-primary text-xs font-bold mt-2 inline-block hover:underline">
+                                            + Add New Address
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="flex items-center gap-3 px-1">
                         <div className="p-2 bg-purple-500/20 text-purple-400 rounded-full">
-                            <Clock size={20} />
+                            <Clock size={18} />
                         </div>
                         <div className="flex-1">
                             <p className="font-bold text-sm">Delivery Time</p>

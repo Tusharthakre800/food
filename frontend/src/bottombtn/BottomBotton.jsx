@@ -1,5 +1,5 @@
 
-import { ShoppingBag, LogOut, Home as HomeIcon, Bookmark } from 'lucide-react';
+import { ShoppingBag, LogOut, Home as HomeIcon, Bookmark, User } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 
@@ -33,6 +33,13 @@ const BottomBotton = () => {
         >
           <ShoppingBag size={24} />
           <span className="text-[0.625rem] font-medium">Orders</span>
+        </Link>
+        <Link 
+          to="/user/profile"
+          className={`flex flex-col items-center gap-1 transition-colors ${isActive('/user/profile') ? 'text-primary' : 'text-gray-300 hover:text-white'}`}
+        >
+          <User size={24} />
+          <span className="text-[0.625rem] font-medium">Profile</span>
         </Link>
 
       </div>

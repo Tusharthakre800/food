@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, ShoppingBag, MapPin, Clock, ChefHat, Home as HomeIcon, Bookmark } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, MapPin, Clock, ChefHat, Home as HomeIcon, Bookmark, XCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import BottomBotton from '../bottombtn/BottomBotton';
-
+import OrderCancel from '../components/OrderCancel';
 
 
 const OrderList = () => {
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [showCancelModal, setShowCancelModal] = useState(false);
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -44,6 +46,19 @@ const OrderList = () => {
         fetchOrders();
     }, [navigate]);
 
+    const handleCancelClick = (order) => {
+        setSelectedOrder(order);
+        setShowCancelModal(true);
+    };
+
+    const handleCancelSuccess = (orderId) => {
+        setOrders(prevOrders => 
+            prevOrders.map(order => 
+                order._id === orderId ? { ...order, status: 'cancelled' } : order
+            )
+        );
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen bg-black text-white p-4">
@@ -70,7 +85,7 @@ const OrderList = () => {
             {/* Header */}
             <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-md p-4 flex items-center gap-4 border-b border-zinc-800">
                 <button 
-                    onClick={() => navigate('/home')}
+                    onClick={() => navigate(-1)}
                     className="p-2 hover:bg-zinc-800 rounded-full transition-colors"
                 >
                     <ArrowLeft size={24} />
@@ -124,9 +139,11 @@ const OrderList = () => {
                                     <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize
                                         ${order.status === 'delivered' ? 'bg-green-500/20 text-green-400' : 
                                           order.status === 'cancelled' ? 'bg-red-500/20 text-red-400' : 
+                                          order.status === 'confirmed' ? 'bg-blue-500/20 text-blue-400' :
+                                          order.status === 'out-for-delivery' ? 'bg-orange-500/20 text-orange-400' :
                                           'bg-yellow-500/20 text-yellow-400'}`}
                                     >
-                                        {order.status}
+                                        {order.status.replace(/-/g, ' ')}
                                     </span>
                                 </div>
 
@@ -154,8 +171,19 @@ const OrderList = () => {
                                         <p className="truncate">{order.address}</p>
                                     </div>
                                     <div className="flex justify-between items-center pt-2 border-t border-zinc-800/50">
-                                        <span className="text-sm text-zinc-400">Total Amount</span>
-                                        <span className="text-lg font-bold text-white">₹{order.totalPrice}</span>
+                                        <div className="flex flex-col">
+                                            <span className="text-sm text-zinc-400">Total Amount</span>
+                                            <span className="text-lg font-bold text-white">₹{order.totalPrice}</span>
+                                        </div>
+                                        {order.status !== 'cancelled' && order.status !== 'delivered' && (
+                                            <button
+                                                onClick={() => handleCancelClick(order)}
+                                                className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-red-400 border border-red-500/30 hover:bg-red-500/10 transition-colors"
+                                            >
+                                                <XCircle size={14} />
+                                                Cancel Order
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -164,32 +192,14 @@ const OrderList = () => {
                 )}
             </div>
 
-            {/* Bottom Navigation */}
-            {/* <div className="fixed bottom-0 left-0 w-full h-16 bg-transparent backdrop-blur-lg border-t border-white/20 flex items-center justify-around z-50">
-                <Link
-                    to="/home"
-                    className="flex flex-col items-center gap-1 text-gray-300 hover:text-white transition-colors"
-                >
-                    <HomeIcon size={24} />
-                    <span className="text-[10px] font-medium">Home</span>
-                </Link>
+            {showCancelModal && selectedOrder && (
+                <OrderCancel 
+                    orderId={selectedOrder._id} 
+                    onClose={() => setShowCancelModal(false)}
+                    onCancelSuccess={handleCancelSuccess}
+                />
+            )}
 
-                <Link
-                    to="/saved"
-                    className="flex flex-col items-center gap-1 text-gray-300 hover:text-white transition-colors"
-                >
-                    <Bookmark size={24} />
-                    <span className="text-[10px] font-medium">Saved</span>
-                </Link>
-
-                <button
-                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="flex flex-col items-center gap-1 text-primary hover:text-white transition-colors"
-                >
-                    <ShoppingBag size={24} />
-                    <span className="text-[10px] font-medium">Orders</span>
-                </button>
-            </div> */}
             <BottomBotton />
         </div>
     );

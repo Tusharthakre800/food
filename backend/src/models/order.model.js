@@ -37,13 +37,9 @@ const orderSchema = new mongoose.Schema({
   },
   status: {
     type: String,
+    enum: ['pending', 'confirmed', 'cancelled', 'out-for-delivery', 'delivered'],
     default: 'pending',
-  },
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
-});
+}});
 
 const OrderModel = mongoose.model('Order', orderSchema);
 module.exports = OrderModel;

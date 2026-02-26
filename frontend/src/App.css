@@ -1,0 +1,33 @@
+/* App specific styles if needed */
+
+/* 
+   Moved global resets to index.css for better loading order with Tailwind 
+   kept generic font-family here if strictly needed, 
+   but Tailwind usually handles this via config 
+*/
+:root {
+    /* Primary Colors */
+    --primary: #ff6b6b;
+    --primary-hover: #fa5252;
+
+    /* Dark Theme Colors */
+    --dark-bg: #121212;
+    --dark-card: #1e1e1e;
+    --dark-input: #1e1e1e;
+    --dark-border: #333333;
+    --dark-text: #e0e0e0;
+    --dark-secondary: #aaaaaa;
+
+    /* Light Theme Colors */
+    --light-bg: #ffffff;
+    --light-card: #ffffff;
+    --light-input: #f9f9f9;
+    --light-border: #e0e0e0;
+    --light-text: #333333;
+    --light-secondary: #666666;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+

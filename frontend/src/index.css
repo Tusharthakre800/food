@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Fix for 100vh on mobile browsers */
+    --vh: 100vh;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    /* Use dvh for dynamic viewport height if supported, fallback to 100vh */
+    min-height: 100vh; 
+    min-height: 100dvh; 
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Reset box-sizing globally */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  /* Standardize button styles */
+  button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    /* Prevent blue highlight on tap on mobile */
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Standardize inputs */
+  input, textarea, select {
+    font: inherit;
+    /* Remove default appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  body {
+    @apply bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text transition-colors duration-300;
+  }
+}
+
+/* Utilities for safe area insets (iPhone X+ home indicator) */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
+.bottom-safe {
+  bottom: env(safe-area-inset-bottom);
+}

@@ -59,6 +59,7 @@ const AdminAllComment = () => {
             toast.error("Failed to delete comment");
         }
     };
+    
 
     const filteredComments = comments.filter(comment => 
         comment.content?.toLowerCase()?.includes(searchTerm.toLowerCase()) || 

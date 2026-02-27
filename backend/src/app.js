@@ -11,10 +11,12 @@ const app = express();
 app.use(cookieParser());
 app.disable('x-powered-by');
 
-const allowedOrigins = [,
-  
-  process.env.FRONTEND_URL // Allow dynamic frontend URL from env
-].filter(Boolean); // Remove undefined/null
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'http://34.42.147.226',
+  process.env.FRONTEND_URL
+].filter(Boolean); 
 
 app.use(cors({
   origin: function (origin, callback) {

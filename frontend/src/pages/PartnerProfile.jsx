@@ -26,7 +26,7 @@ const PartnerProfile = () => {
                     return;
                 }
 
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/profile`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setPartner(response.data.profile);

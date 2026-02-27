@@ -27,7 +27,7 @@ const SearchFood = () => {
             setError(null);
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/search?q=${encodeURIComponent(query)}`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food/search?q=${encodeURIComponent(query)}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setSearchResults(response.data.foodItems || []);

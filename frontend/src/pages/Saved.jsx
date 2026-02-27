@@ -22,7 +22,7 @@ const Saved = () => {
     const fetchSavedFood = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/saved`, {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food/saved`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         // Map saved items to extract food details and inject isSaved: true

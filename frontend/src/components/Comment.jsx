@@ -26,7 +26,7 @@ const Comment = ({ item, containerRef }) => {
         try {
             setLoadingComments(true);
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/comments/${item._id}`, {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food/comments/${item._id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setComments(response.data.comments || []);

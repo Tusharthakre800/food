@@ -88,7 +88,7 @@ const VideoCard = ({ item }) => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.post(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/like`, 
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/api/food/like`, 
                 { foodId: item._id },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

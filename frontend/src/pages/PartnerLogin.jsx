@@ -17,7 +17,7 @@ const PartnerLogin = () => {
     const formData = new FormData(e.target);
     const loginData = Object.fromEntries(formData);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/auth/food-partner/login`, loginData);
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/food-partner/login`, loginData);
       // console.log('Login successful:', response.data);
       // Save token and redirect
       localStorage.setItem('token', response.data.token);

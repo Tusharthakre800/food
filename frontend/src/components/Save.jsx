@@ -13,7 +13,7 @@ const Save = ({ item }) => {
             const newIsSaved = !isSaved;
             setIsSaved(newIsSaved);
 
-            await axios.post(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/save`, 
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/api/food/save`, 
                 { foodId: item._id },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

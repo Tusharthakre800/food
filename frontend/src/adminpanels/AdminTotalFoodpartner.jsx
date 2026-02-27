@@ -26,7 +26,7 @@ const AdminTotalFoodpartner = () => {
                     return;
                 }
 
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/admin/allfoodpartners`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/admin/allfoodpartners`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setPartners(response.data);

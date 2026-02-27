@@ -15,7 +15,7 @@ const PartnerRegister = () => {
     const formData = new FormData(e.target);
     const partnerData = Object.fromEntries(formData);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/auth/food-partner/register`, partnerData);
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/food-partner/register`, partnerData);
       // console.log('Registration successful:', response.data);
       // Save token and redirect
       if (response.data.token) {

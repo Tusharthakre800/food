@@ -69,7 +69,7 @@ const OrderFood = () => {
                 const token = localStorage.getItem('token');
                 if (!token) return;
 
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/user/profile`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food/user/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 

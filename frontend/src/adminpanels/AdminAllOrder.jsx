@@ -25,7 +25,7 @@ const AdminAllOrder = () => {
                     return;
                 }
 
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/admin/allorders`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/admin/allorders`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 

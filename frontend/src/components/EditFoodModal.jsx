@@ -58,7 +58,7 @@ const EditFoodModal = ({ isOpen, onClose, foodItem, onUpdate }) => {
     }
 
     const updatePromise = axios.put(
-      `${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/${foodItem._id}`,
+      `${import.meta.env.VITE_BASE_URL}/api/food/${foodItem._id}`,
       data,
       {
         headers: {

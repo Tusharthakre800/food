@@ -24,7 +24,7 @@ const OrderCancel = ({ orderId, onClose, onCancelSuccess }) => {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/order-cancel`, 
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/food/order-cancel`, 
                 { orderId, cancelReason: reason },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

@@ -26,7 +26,7 @@ const AdminTotalUser = () => {
                     return;
                 }
 
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/admin/users`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/admin/users`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setUsers(response.data);

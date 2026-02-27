@@ -81,7 +81,7 @@ const CreateFoodPartner = () => {
     }
 
     const createDishPromise = axios.post(
-      `${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food`,
+      `${import.meta.env.VITE_BASE_URL}/api/food`,
       data,
       {
         headers: {

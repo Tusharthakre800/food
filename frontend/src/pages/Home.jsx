@@ -28,7 +28,7 @@ const Home = () => {
     const fetchFood = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food`, {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         // Ensure we have an array

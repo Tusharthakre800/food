@@ -26,7 +26,7 @@ const AdminAllComment = () => {
                     return;
                 }
 
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/admin/allvideocomments`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/admin/allvideocomments`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setComments(response.data);
@@ -49,7 +49,7 @@ const AdminAllComment = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/admin/deletevideocomment/${id}`, {
+            await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/admin/deletevideocomment/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setComments(comments.filter(comment => comment._id !== id));

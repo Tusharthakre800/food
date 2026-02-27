@@ -15,7 +15,7 @@ const UserRegister = () => {
     const formData = new FormData(e.target);
     const userData = Object.fromEntries(formData);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/auth/user/register`, userData);
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/user/register`, userData);
       // console.log('Registration successful:', response.data);
       // Redirect to home page
       toast.success("Registration successful!");

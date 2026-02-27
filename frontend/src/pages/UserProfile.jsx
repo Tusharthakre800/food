@@ -49,7 +49,7 @@ const UserProfile = () => {
                     return;
                 }
 
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/user/profile`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food/user/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
@@ -87,7 +87,7 @@ const UserProfile = () => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(
-                `${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/user/address`,
+                `${import.meta.env.VITE_BASE_URL}/api/food/user/address`,
                 newAddress,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -109,7 +109,7 @@ const UserProfile = () => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.delete(
-                `${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/user/address/${addressId}`,
+                `${import.meta.env.VITE_BASE_URL}/api/food/user/address/${addressId}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -126,7 +126,7 @@ const UserProfile = () => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.patch(
-                `${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/user/address/${addressId}/default`,
+                `${import.meta.env.VITE_BASE_URL}/api/food/user/address/${addressId}/default`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -156,7 +156,7 @@ const UserProfile = () => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(
-                `${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/user/profile-pic`,
+                `${import.meta.env.VITE_BASE_URL}/api/food/user/profile-pic`,
                 formData,
                 { 
                     headers: { 

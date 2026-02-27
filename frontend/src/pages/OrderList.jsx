@@ -25,7 +25,7 @@ const OrderList = () => {
                     return;
                 }
 
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/order-list`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/food/order-list`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 

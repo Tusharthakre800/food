@@ -15,7 +15,7 @@ const Profile = () => {
         const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/foodpartner/${id}`, {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/foodpartner/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setPartner(response.data.foodpartner);

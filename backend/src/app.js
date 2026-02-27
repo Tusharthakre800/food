@@ -12,9 +12,7 @@ app.use(cookieParser());
 app.disable('x-powered-by');
 
 const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:5173',
-  'http://34.42.147.226',
+  'http://34.70.176.217',
   process.env.FRONTEND_URL
 ].filter(Boolean); 
 

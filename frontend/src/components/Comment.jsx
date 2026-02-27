@@ -43,7 +43,7 @@ const Comment = ({ item, containerRef }) => {
         
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/comment`, 
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/food/comment`, 
                 { foodId: item._id, content: commentText , commentCount: commentCount + 1 },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

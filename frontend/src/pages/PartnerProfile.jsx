@@ -57,7 +57,7 @@ const PartnerProfile = () => {
 
     const performDelete = async (id) => {
         const token = localStorage.getItem('token');
-        const deletePromise = axios.delete(`${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/${id}`, {
+        const deletePromise = axios.delete(`${import.meta.env.VITE_BASE_URL}/api/food/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 

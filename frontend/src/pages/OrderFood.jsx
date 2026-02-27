@@ -111,7 +111,7 @@ const OrderFood = () => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(
-                `${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/discount`,
+                `${import.meta.env.VITE_BASE_URL}/api/food/discount`,
                 { discountCode },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -157,7 +157,7 @@ const OrderFood = () => {
             };
 
             await axios.post(
-                `${import.meta.env.VITE_BASE_URL || 'http://localhost:3000'}/api/food/order`,
+                `${import.meta.env.VITE_BASE_URL}/api/food/order`,
                 orderData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );

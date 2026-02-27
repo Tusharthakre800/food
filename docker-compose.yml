@@ -1,28 +1,24 @@
 
 
-version: "3.9"
-
+version: '3.8'
 
 services:
   backend:
     build: ./backend
-    environment:
-      - NODE_ENV=${production}
-      - PORT=${PORT}
-      - FRONTEND_URL=${FRONTEND_URL}
-      - MONGODB_URI=${MONGODB_URI}
-      - JWT_SECRET=${JWT_SECRET}
-      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
-      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
-      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+    container_name: backend
     ports:
-      - "8080:8080"
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
 
   frontend:
     build: ./frontend
-    environment:
-      - VITE_BASE_URL=${VITE_BASE_URL}
-    depends_on:
-      - backend
+    container_name: frontend
     ports:
       - "5173:5173"
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+    restart: unless-stopped

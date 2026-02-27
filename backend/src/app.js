@@ -13,8 +13,6 @@ app.disable('x-powered-by');
 
 const allowedOrigins = [,
   
-  'http://localhost:3000', 
-  // 'http://localhost:5173',
   process.env.FRONTEND_URL // Allow dynamic frontend URL from env
 ].filter(Boolean); // Remove undefined/null
 

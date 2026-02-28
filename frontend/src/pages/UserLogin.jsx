@@ -16,7 +16,7 @@ const UserLogin = () => {
     const formData = new FormData(e.target);
     const loginData = Object.fromEntries(formData);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/user/login`, loginData);
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/user/login`, loginData);
       // console.log('Login successful:', response.data);
       // Save token and redirect
       toast.success("Login successful!");

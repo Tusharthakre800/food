@@ -19,14 +19,13 @@ const ForgotPassword = () => {
     setResetLink(null);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/user/forgot-password`, { email });
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/user/forgot-password`, { email });
       toast.success(response.data.message);
       
       // For demonstration purposes, we display the link since we don't have email service
       if (response.data.resetToken) {
         setResetLink(`/reset-password/${response.data.resetToken}`);
       }
-      
     } catch (error) {
       // console.error('Forgot password error:', error);
       toast.error(error.response?.data?.message || "Failed to process request");

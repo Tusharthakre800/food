@@ -12,7 +12,6 @@ app.use(cookieParser());
 app.disable('x-powered-by');
 
 const allowedOrigins = [
-  'http://34.70.176.217',
   process.env.FRONTEND_URL
 ].filter(Boolean); 
 

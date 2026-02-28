@@ -26,6 +26,7 @@ const ForgotPassword = () => {
       if (response.data.resetToken) {
         setResetLink(`/reset-password/${response.data.resetToken}`);
       }
+      
     } catch (error) {
       // console.error('Forgot password error:', error);
       toast.error(error.response?.data?.message || "Failed to process request");

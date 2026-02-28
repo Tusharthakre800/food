@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use('/api/auth', authRoutes);
+app.use('auth', authRoutes);
 app.use('/api/food', foodRoutes);
 app.use('/api/foodpartner', foodpartnerRoutes);
 app.use('/api/admin', adminRoutes);

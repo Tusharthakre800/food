@@ -12,6 +12,8 @@ app.use(cookieParser());
 app.disable('x-powered-by');
 
 const allowedOrigins = [
+  "http://localhost:5173",
+  "localhost:3000",
   process.env.FRONTEND_URL
 ].filter(Boolean); 
 
@@ -36,7 +38,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use('auth', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/food', foodRoutes);
 app.use('/api/foodpartner', foodpartnerRoutes);
 app.use('/api/admin', adminRoutes);

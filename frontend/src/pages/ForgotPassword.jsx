@@ -20,6 +20,7 @@ const ForgotPassword = () => {
 
     try {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/user/forgot-password`, { email });
+      console.log(import.meta.env.VITE_BASE_URL);
       toast.success(response.data.message);
       
       // For demonstration purposes, we display the link since we don't have email service

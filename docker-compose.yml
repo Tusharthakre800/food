@@ -7,7 +7,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: food_backend
+    container_name: mern_backend
     restart: always
     env_file:
       - ./backend/.env          # Load backend environment variables
@@ -26,16 +26,16 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: food_frontend
+    container_name: mern_frontend
     restart: always
     env_file:
-      - ./frontend/.env         # Load frontend environment variables
+      - ./frontend/.env          # Load frontend environment variables
     ports:
       - "80:80"                 # Serves React on port 80
     depends_on:
       - backend                 # Wait for backend to be ready
     networks:
-      - food-network
+      - mern-network
 
 # ---- Shared Network ----
 networks:

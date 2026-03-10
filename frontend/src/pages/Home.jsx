@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 
 import { ShoppingBag, LogOut, Home as HomeIcon, Bookmark, Search } from 'lucide-react';
 // import ThemeToggle from '../components/ThemeToggle';

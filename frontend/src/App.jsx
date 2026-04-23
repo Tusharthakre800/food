@@ -7,7 +7,9 @@ function App() {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <AppRouter />
+     
+        <AppRouter />
+
     </>
   )
 }

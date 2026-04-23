@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ArrowLeft, Search, X, TrendingUp, Clock, Star, ChefHat, Loader } from 'lucide-react';
 import BottomBotton from '../bottombtn/BottomBotton';
-import VideoCard from '../components/VideoCard';
 
 const SearchFood = () => {
     const navigate = useNavigate();
@@ -47,7 +46,7 @@ const SearchFood = () => {
     }, [query]);
 
     return (
-        <div className="min-h-screen bg-black text-white pb-24 font-sans">
+        <div className="min-h-screen bg-black text-white pb-24 font-sans  ">
             {/* Header & Search Bar */}
             <div className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md p-4 border-b border-zinc-800">
                 <div className="flex items-center gap-3 max-w-xl mx-auto">
@@ -99,7 +98,7 @@ const SearchFood = () => {
 
                 {/* Search Results */}
                 {query && (
-                    <div className="animate-in fade-in duration-300">
+                    <div className="animate-in fade-in duration-300  pt-16">
                         <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                            Results for <span className="text-primary">"{query}"</span>
                         </h3>

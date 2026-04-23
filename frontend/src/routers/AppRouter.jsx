@@ -34,7 +34,7 @@ function AppRouter() {
     <>
       <Routes>
         <Route path="/" element={<Navigate to="/user/login" replace />} />
-        
+
         Admin Routes
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={

@@ -1,43 +1,23 @@
-version: "3.8"
-
+version: '3.8'
 services:
-
-  # ---- Backend Service ----
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: mern_backend
-    restart: always
-    env_file:
-      - ./backend/.env          # Load backend environment variables
-    ports:
-      - "5000:5000"             # host:container
-    networks:
-      - mern-network
-    healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5000/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # ---- Frontend Service ----
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: mern_frontend
-    restart: always
-    env_file:
-      - ./frontend/.env          # Load frontend environment variables
+    build: ./frontend
     ports:
-      - "80:80"                 # Serves React on port 80
-    depends_on:
-      - backend                 # Wait for backend to be ready
-    networks:
-      - mern-network
+      - 3000:80
 
-# ---- Shared Network ----
-networks:
-  mern-network:
-    driver: bridge
+  server:
+    build: ./backend
+    ports:
+      - 5000:5000
+    env_file:
+      - ./backend/.env
+
+  nginx:
+    image: nginx:1.19-alpine
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
